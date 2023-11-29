@@ -3,8 +3,8 @@ const stripe = require('stripe')(process.env.STRIPE_SK);
 import {buffer} from 'micro';
 import {Order} from "@/models/Order";
 
-const endpointSecret = "whsec_575fc5f6800a64f03f95467baa29ea102d3c33862eb3cf0db1d191555df8cdda";
-
+// const endpointSecret = "whsec_575fc5f6800a64f03f95467baa29ea102d3c33862eb3cf0db1d191555df8cdda";
+const endpointSecret="whsec_mhZ5uzHWPc5BpC0l9kb07I7nOVp9rAaR";
 export default async function handler(req,res) {
   await mongooseConnect();
   const sig = req.headers['stripe-signature'];
