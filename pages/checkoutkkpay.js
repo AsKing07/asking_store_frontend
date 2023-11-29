@@ -20,7 +20,8 @@ import { useEffect } from 'react';
 
   const{name, email, city, postalCode,streetAddress,country,
     cartProducts,phone, total, orderId,items}= router.query;
-
+//enlever les quatres premiers caractères de la variable phone
+const phoneWithoutPrefix = phone.substring(4);
 
     const data = {orderId:orderId,name:name, email:email,city:city, streetAddress:streetAddress, country:country, items:items}
     const success_url= process.env.NEXT_PUBLIC_PUBLIC_URL + `/cart?success=1`;
@@ -63,7 +64,7 @@ async function successHandler(response) {
         api_key: '74707e40729f11eea29bd729ceb25af7',
         sandbox: true,
         email: email,
-        phone: phone.substring(4),
+        phone: phoneWithoutPrefix,
       });
   
   
