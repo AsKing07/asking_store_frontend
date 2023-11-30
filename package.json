@@ -19,6 +19,7 @@
     "react-dom": "^18",
     "react-modal": "^3.16.1",
     "react-phone-number-input": "^3.3.7",
+    "react-spinners": "^0.13.8",
     "stripe": "^14.5.0",
     "styled-components": "^6.1.1"
   },
