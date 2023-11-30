@@ -4,6 +4,7 @@ import Center from "./Center";
 import {useContext, useState} from "react";
 import {CartContext} from "@/components/CartContext";
 import BarsIcon from "@/components/icons/Bars";
+import SearchIcon from "./icons/SearchIcon";
 
 const StyledHeader = styled.header`
   background-color: #222;
@@ -100,9 +101,12 @@ export default function Header()
                         <NavLink href={'/account'}>Compte</NavLink>
                         <NavLink href={'/cart'}>Panier({cartProducts.length})</NavLink>
                     </StyledNav>
-                    <NavButton onClick={() => setMobileNavActive(prev => !prev)}>
-            <BarsIcon />
-          </NavButton>
+                    <SideIcons>
+            <Link href={'/search'}><SearchIcon /></Link>
+            <NavButton onClick={() => setMobileNavActive(prev => !prev)}>
+              <BarsIcon />
+            </NavButton>
+          </SideIcons>
                 </Wrapper>
                
             </Center>
