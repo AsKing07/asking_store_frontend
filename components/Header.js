@@ -6,23 +6,22 @@ import {CartContext} from "@/components/CartContext";
 import BarsIcon from "@/components/icons/Bars";
 
 const StyledHeader = styled.header`
-background-color: #222;
+  background-color: #222;
+  position:sticky;
+  top:0;
+  z-index:10;
 `;
-
 const Logo = styled(Link)`
-color:#fff;
-text-decoration:none;
-position: relative;
-z-index: 3;
-`
-;
-
-const Wrapper = styled.div`
-display: flex;
-justify-content: space-between;
-padding: 20px 0;
+  color:#fff;
+  text-decoration:none;
+  position: relative;
+  z-index: 3;
 `;
-
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+`;
 const StyledNav = styled.nav`
   ${props => props.mobileNavActive ? `
     display: block;
@@ -43,18 +42,19 @@ const StyledNav = styled.nav`
     padding: 0;
   }
 `;
-
 const NavLink = styled(Link)`
-display: block;
-color:#aaa;
-text-decoration:none;
-padding: 10px 0;
-@media screen and (min-width: 768px) {
-  padding:0;
-}
-
+  display: block;
+  color:#aaa;
+  text-decoration:none;
+  min-width:30px;
+  padding: 10px 0;
+  svg{
+    height:20px;
+  }
+  @media screen and (min-width: 768px) {
+    padding:0;
+  }
 `;
-
 const NavButton = styled.button`
   background-color: transparent;
   width: 30px;
@@ -66,6 +66,19 @@ const NavButton = styled.button`
   z-index: 3;
   @media screen and (min-width: 768px) {
     display: none;
+  }
+`;
+const SideIcons = styled.div`
+  display: flex;
+  align-items: center;
+  a{
+    display:inline-block;
+    min-width:20px;
+    color:white;
+    svg{
+      width:14px;
+      height:14px;
+    }
   }
 `;
 

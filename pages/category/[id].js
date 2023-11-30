@@ -9,35 +9,38 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-// Styles spécifiques pour la mise en page de la page de la catégorie
+/* Styles pour la mise en page de la page de la catégorie */
 const CategoryHeader = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  h1{
-    font-size:1.5em;
+  flex-direction: column; 
+  align-items: flex-start;
+  h1 {
+    font-size: 1.5em;
+    margin-bottom: 10px; 
   }
 `;
 
-// ... (styles pour l'enveloppe des filtres)
+/* Styles pour l'enveloppe des filtres */
 const FiltersWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap; 
   gap: 15px;
 `;
 
-// ... (styles pour les filtres individuels)
+/* Styles pour les filtres individuels */
 const Filter = styled.div`
   background-color: #ddd;
   padding: 5px 10px;
   border-radius: 5px;
   display: flex;
   gap: 5px;
-  color:#444;
-  select{
-    background-color:transparent;
-    border:0;
-    font-size:inherit;
-    color:#444;
+  color: #444;
+  margin-bottom: 10px; /* Espacement en bas de chaque filtre */
+  select {
+    background-color: transparent;
+    border: 0;
+    font-size: inherit;
+    color: #444;
   }
 `;
 
