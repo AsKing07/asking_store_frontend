@@ -14,6 +14,8 @@ import {RevealWrapper} from "next-reveal";
 
 // import { Product } from "@/models/Product";
 import Modal from 'react-modal';
+import { useSession } from "next-auth/react";
+import Spinner from "@/components/Spinner";
 Modal.setAppElement('#__next');
 
 
@@ -121,8 +123,10 @@ const AlertHolder = styled.p`
 
 
 export default function CartPage() {
+  const { data: session } = useSession();
   const {cartProducts,addProduct,removeProduct,clearCart} = useContext(CartContext);
   const [products,setProducts] = useState([]);
+  const [addressLoaded, setAddressLoaded] = useState(true);
   const [name,setName] = useState('');
   const [email,setEmail] = useState('');
   const [city,setCity] = useState('');
@@ -164,6 +168,29 @@ export default function CartPage() {
       setProducts([]);
     }
   }, [cartProducts]);
+
+  useEffect(() => {
+    if (!session) {
+      return;
+    }
+    setAddressLoaded(false);
+    axios.get('/api/address').then(response => {
+        try{
+            setName(response.data.name);
+            setEmail(response.data.email);
+            setCity(response.data.city);
+            setPostalCode(response.data.postalCode);
+            setStreetAddress(response.data.streetAddress);
+            setCountry(response.data.country);
+            setAddressLoaded(true);
+        }
+        catch(e)
+        {
+            setAddressLoaded(true);
+        } 
+    });
+   
+  }, [session]);
 
 
   useEffect(() => {
@@ -300,6 +327,9 @@ export default function CartPage() {
             <RevealWrapper delay={100}>
                 <Box>
               <h2>Informations de commande </h2>
+              {!addressLoaded && <Spinner fullWidth={true} />}
+                {addressLoaded  && (
+                  <>
               <Input required type="text"
                      placeholder="Nom*"
                      value={name}
@@ -348,6 +378,8 @@ export default function CartPage() {
                      <Button black block onClick={() => setModalIsOpen(true)}>
   Continuer le paiement
 </Button>
+</>
+                )}
 
             </Box>
             </RevealWrapper>

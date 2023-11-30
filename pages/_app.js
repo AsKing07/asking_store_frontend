@@ -1,5 +1,6 @@
 import {createGlobalStyle} from "styled-components";
 import {CartContextProvider} from "@/components/CartContext";
+import {SessionProvider} from "next-auth/react";
 
 const GlobalStyles = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
@@ -9,24 +10,22 @@ const GlobalStyles = createGlobalStyle`
     margin:0;
     font-family: 'Poppins', sans-serif;
   }
-
-  .phoneInput{
-    width: 100%;
-    padding: 5px;
-    margin-bottom: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing:border-box;
+  hr{
+    display: block;
+    border:0;
+    border-top:1px solid #ccc;
   }
 `;
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps: {session, ...pageProps } }) {
   return (
     <>
       <GlobalStyles />
-      <CartContextProvider>
-        <Component {...pageProps} />
-      </CartContextProvider>
+      <SessionProvider session={session}>
+        <CartContextProvider>
+          <Component {...pageProps} />
+        </CartContextProvider>
+      </SessionProvider>
     </>
   );
 }
