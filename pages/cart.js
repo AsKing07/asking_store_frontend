@@ -10,11 +10,12 @@ import Input from "@/components/Input";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import { useRouter } from "next/router";
-import { Order } from "@/models/Order";
-import { mongooseConnect } from "@/lib/mongoose";
+import {RevealWrapper} from "next-reveal";
+
 // import { Product } from "@/models/Product";
 import Modal from 'react-modal';
 Modal.setAppElement('#__next');
+
 
 
 const customStylesModal = {
@@ -47,8 +48,22 @@ const ColumnsWrapper = styled.div`
   }
   gap: 40px;
   margin-top: 40px;
+  margin-bottom: 40px;
+  table thead tr th:nth-child(3),
+  table tbody tr td:nth-child(3),
+  table tbody tr.subtotal td:nth-child(2){
+    text-align: right;
+  }
+  table tr.subtotal td{
+    padding: 15px 0;
+  }
+  table tbody tr.subtotal td:nth-child(2){
+    font-size: 1.4rem;
+  }
+  tr.total td{
+    font-weight: bold;
+  }
 `;
-
 const Box = styled.div`
   background-color: #fff;
   border-radius: 10px;
@@ -57,6 +72,7 @@ const Box = styled.div`
 
 const ProductInfoCell = styled.td`
   padding: 10px 0;
+  button{padding:0 !important;}
 `;
 
 const ProductImageBox = styled.div`
@@ -231,7 +247,8 @@ export default function CartPage() {
       <Header />
       <Center>
         <ColumnsWrapper>
-          <Box>
+        <RevealWrapper delay={0}>
+        <Box>
             <h2>Panier</h2>
             {!cartProducts?.length && (
               <div>Votre panier est vide!</div>
@@ -277,8 +294,11 @@ export default function CartPage() {
               </Table>
             )}
           </Box>
+        </RevealWrapper>
+        
           {!!cartProducts?.length && (
-            <Box>
+            <RevealWrapper delay={100}>
+                <Box>
               <h2>Informations de commande </h2>
               <Input required type="text"
                      placeholder="Nom*"
@@ -330,6 +350,8 @@ export default function CartPage() {
 </Button>
 
             </Box>
+            </RevealWrapper>
+          
           )}
         </ColumnsWrapper>
        

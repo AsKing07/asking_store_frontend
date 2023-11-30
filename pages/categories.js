@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import Center from "@/components/Center";
 import Header from "@/components/Header";
 import ProductBox from "@/components/ProductBox";
@@ -7,6 +8,8 @@ import { Category } from "@/models/Category";
 import { Product } from "@/models/Product";
 import Link from "next/link";
 import styled from "styled-components";
+import {RevealWrapper} from "next-reveal";
+
 
 const CategoryGrid = styled.div`
   display: grid;
@@ -63,13 +66,17 @@ export default function CategoriesPage({maincategories,categoriesProducts})
                     </div>
                     </CategoryTitle>
                     <CategoryGrid>
-                        {categoriesProducts[cat._id].map(p =>(
-                        
-                           <ProductBox key={p._id} {...p}  />
-                      ))}
-                       <ShowAllSquare href={'/category/'+cat._id}>
-                          Voir tout &rarr;
-                        </ShowAllSquare>
+                    {categoriesProducts[cat._id].map((p,index) => (
+                <RevealWrapper delay={index*50}>
+                  <ProductBox {...p}  />
+                </RevealWrapper>
+              ))}
+              <RevealWrapper delay={categoriesProducts[cat._id].length*50}>
+                <ShowAllSquare href={'/category/'+cat._id}>
+                  Voir tout &rarr;
+                </ShowAllSquare>
+              </RevealWrapper>
+                       
                     </CategoryGrid>
                    
                 </CategoryWrapper>

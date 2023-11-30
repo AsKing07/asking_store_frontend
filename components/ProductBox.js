@@ -4,6 +4,7 @@ import CartIcon from "@/components/icons/CartIcon";
 import Link from "next/link";
 import {useContext} from "react";
 import {CartContext} from "@/components/CartContext";
+import FlyingButton from "@/components/FlyingButton";
 
 const ProductWrapper = styled.div`
   
@@ -79,10 +80,14 @@ export default function ProductBox({_id,title,description,price,images}) {
           <Price>
             ${price}
           </Price>
-          <Button block onClick={() => addProduct(_id)} primary outline>
-            <CartIcon />
-            Ajouter au panier
-          </Button>
+          <FlyingButton _id={_id} src={images?.[0]}> <CartIcon/> Ajouter au panier</FlyingButton>
+          {/* <FlyingButton src={images?.[0]} targetTop={'5%'} targetLeft={'95%'}>
+            <Button block onClick={() => addProduct(_id)} primary outline>
+              <CartIcon />
+              Ajouter au panier
+            </Button>
+          </FlyingButton> */}
+          
         </PriceRow>
       </ProductInfoBox>
     </ProductWrapper>
