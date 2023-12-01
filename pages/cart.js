@@ -176,6 +176,7 @@ export default function CartPage() {
     setAddressLoaded(false);
     axios.get('/api/address').then(response => {
         try{
+          setPhone(response.data.phone)
             setName(response.data.name);
             setEmail(response.data.email);
             setCity(response.data.city);

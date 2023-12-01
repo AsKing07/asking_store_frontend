@@ -1,8 +1,13 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/jsx-key */
 import Button from "@/components/Button";
 import Center from "@/components/Center";
 import Header from "@/components/Header";
 import Input from "@/components/Input";
+import ProductBox from "@/components/ProductBox";
+import SingleOrder from "@/components/SingleOrder";
 import Spinner from "@/components/Spinner";
+import Tabs from "@/components/Tabs";
 import Title from "@/components/Title";
 import WhiteBox from "@/components/WhiteBox";
 import axios from "axios";
@@ -14,10 +19,13 @@ import 'react-phone-number-input/style.css'
 import styled from "styled-components";
 
 const ColsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 40px;
-  margin: 40px 0;
+display: grid;
+grid-template-columns: 1fr;
+@media screen and (min-width: 768px) {
+  grid-template-columns: 1.2fr .8fr;
+}
+gap: 40px;
+margin: 40px 0px;
   p {
     margin: 5px;
   }
@@ -27,6 +35,13 @@ const CityHolder = styled.div`
   display:flex;
   gap: 5px;
 `;
+
+const WishedProductsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+`;
+
 
 export default function AccountPage() {
   const { data: session } = useSession();
@@ -66,6 +81,7 @@ export default function AccountPage() {
     setOrderLoaded(false);
     axios.get('/api/address').then(response => {
         try{
+            setPhone(response.data.phone);
             setName(response.data.name);
             setEmail(response.data.email);
             setCity(response.data.city);
@@ -79,15 +95,36 @@ export default function AccountPage() {
             setAddressLoaded(true);
         } 
     });
-    // axios.get('/api/wishlist').then(response => {
-    //   setWishedProducts(response.data.map(wp => wp.product));
-    //   setWishlistLoaded(true);
-    // });
-    // axios.get('/api/orders').then(response => {
-    //   setOrders(response.data);
-    //   setOrderLoaded(true);
-    // });
+    try{
+        axios.get('/api/wishlist').then(response => {
+            setWishedProducts(response.data.map(wp => wp.product));
+            setWishlistLoaded(true);
+          });
+    }
+    catch(e)
+    {
+        setWishlistLoaded(true);
+    }
+
+    try{
+         axios.get('/api/orders').then(response => {
+      setOrders(response.data);
+      setOrderLoaded(true);
+    });
+    }
+    catch(e)
+    {
+        setOrderLoaded(true);
+    }
+  
+   
   }, [session]);
+
+  function productRemovedFromWishlist(idToRemove) {
+    setWishedProducts(products => {
+      return [...products.filter(p => p._id.toString() !== idToRemove)];
+    });
+  }
   return (
     <>
       <Header />
@@ -96,14 +133,65 @@ export default function AccountPage() {
           <div>
             <RevealWrapper delay={0}>
               <WhiteBox>
-                <h2>Liste de souhaits</h2>
+            
+              <Tabs
+                  tabs={['Commandes','Liste de souhaits']}
+                  active={activeTab}
+                  onChange={setActiveTab}
+                />
+                {activeTab === 'Commandes' && (
+                  <>
+                 {!session &&  (<p>Connectez-vous pour voir vos commandes</p>) }
+
+                    {!orderLoaded && (
+                      <Spinner fullWidth={true} />
+                    )}
+                    {orderLoaded && session && (
+                      <div>
+                        {orders.length === 0 && (
+                          <p>Vous n'avez pas encore de commandes!</p>
+                        )}
+                        {orders.length > 0 && orders.map(o => (
+                          <SingleOrder {...o} />
+                        ))}
+                      </div>
+                    )}
+                  </>
+                )}
+                
+                {activeTab === 'Liste de souhaits' && (
+                    <>
+                    {!wishlistLoaded && (
+                      <Spinner fullWidth={true} />
+                    )}
+                    {wishlistLoaded && (
+                      <>
+                        <WishedProductsGrid>
+                          {wishedProducts.length > 0 && wishedProducts.map(wp => (
+                            <ProductBox key={wp._id} {...wp} wished={true} onRemoveFromWishlist={productRemovedFromWishlist} />
+                          ))}
+                        </WishedProductsGrid>
+                        {wishedProducts.length === 0 && (
+                          <>
+                            {session && (
+                              <p>Votre liste de souhaits est vide🥲</p>
+                            )}
+                            {!session && (
+                              <p>Connectez vous pour ajouter des produits à votre liste de souhait!</p>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
               </WhiteBox>
             </RevealWrapper>
           </div>
           <div>
             <RevealWrapper delay={0}>
               <WhiteBox>
-                <h2>{session ? "Détails du compte" : "Conexion"}</h2>
+                <h2>{session ? "Détails du compte" : "Connexion"}</h2>
                 {!addressLoaded && <Spinner fullWidth={true} />}
                 {addressLoaded && session && (
                   <>
