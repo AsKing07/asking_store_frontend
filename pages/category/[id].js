@@ -244,6 +244,7 @@ console.log(mergedValues);
                             </select>
                         </Filter>
                     ))}
+                     {/* ... (affichage des filtres de la catégorie parente si elle existe) */}
                     {parentCat?.properties?.map(prop =>(
                         <Filter key={prop.name}>
                             {prop.name}
@@ -313,14 +314,13 @@ console.log(mergedValues);
 //   }
 // Récupère les données côté serveur pour la page de la catégorie
 export async function getServerSideProps(context) {
-    // Récupère la catégorie, ses sous-catégories et les produits associés
+    // Récupère la catégorie, sa catégorie parente si elle existe et les produits associés
     const category = await Category.findById(context.query.id);
     
     const parentCategorie = await Category.findById(category.parent)
 
     const catIds = [category._id];
     const products = await Product.find({category:catIds});
-    // const properties = [category.properties, parentCategorie.properties]
     console.log( JSON.parse(JSON.stringify(parentCategorie)))
     return {
       props:{
