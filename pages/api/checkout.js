@@ -47,7 +47,7 @@ export default async function handler(req,res) {
 
   if(methode==='stripe')
   {
-    const session = await stripe.checkout.sessions.create({
+    const StripeSession = await stripe.checkout.sessions.create({
       line_items,
       mode: 'payment',
       customer_email: email,
@@ -57,7 +57,7 @@ export default async function handler(req,res) {
     });
 
     res.json({
-      url:session.url,
+      url:StripeSession.url,
     })
   }
   else
