@@ -335,7 +335,7 @@ export default function CartPage() {
                   </tr>
                 </tbody>
               </Table>
-              <p>Bénéficiez d'une réduction de <strong>10%</strong> en utilisant le code promotionnel <strong>TEN</strong> via un payement sur Stripe!</p>
+              <p>Bénéficiez d'une réduction de <strong>10%</strong> sur votre premier payement en utilisant le code promotionnel <strong>TEN</strong> via un payement sur Stripe!</p>
               </>
        
               
