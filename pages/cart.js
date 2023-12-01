@@ -137,9 +137,12 @@ export default function CartPage() {
   const [isSuccess,setIsSuccess] = useState(false);
   const [showAlertText,setShowAlertText]= useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [shippingFee, setShippingFee] = useState(null);
+
   const router = useRouter();
 
   const handlePaymentMode = (mode) => {
+    total+=parseInt(shippingFee || 0)
     // Effectuer des actions en fonction du mode de paiement sélectionné
     //vérifier si un des champ est vide
     if (!name || !email || !city  || !streetAddress || !country || !phone) {
@@ -207,7 +210,10 @@ export default function CartPage() {
         console.log(`Impossible de vider le panier: ${e}`)
       }
       setIsSuccess(true);
+     
     }
+    axios.get('/api/settings?name=shippingFee').then(res => {
+      setShippingFee(res.data.value);})
   }, []);
 
 
@@ -313,10 +319,17 @@ export default function CartPage() {
                       </td>
                     </tr>
                   ))}
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td>Total:<strong>${total}</strong></td>
+                  <tr className="subtotal">
+                    <td colSpan={2}>Produits</td>
+                    <td>${total}</td>
+                  </tr>
+                  <tr className="subtotal">
+                    <td colSpan={2}>Frais de livraison</td>
+                    <td>${parseInt(shippingFee || 0) }</td>
+                  </tr>
+                  <tr className="subtotal total">
+                    <td colSpan={2}>Total</td>
+                    <td>${total + parseInt(shippingFee || 0)}</td>
                   </tr>
                 </tbody>
               </Table>
