@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import Header from "@/components/Header";
 import styled from "styled-components";
 import Center from "@/components/Center";
@@ -288,7 +289,8 @@ export default function CartPage() {
               <div>Votre panier est vide!</div>
             )}
             {products?.length > 0 && (
-              <Table>
+              <>
+                       <Table>
                 <thead>
                   <tr>
                     <th>Produit</th>
@@ -333,6 +335,10 @@ export default function CartPage() {
                   </tr>
                 </tbody>
               </Table>
+              <p>Bénéficiez d'une réduction de <strong>10%</strong> en utilisant le code promotionnel <strong>TEN</strong> via un payement sur Stripe!</p>
+              </>
+       
+              
             )}
           </Box>
         </RevealWrapper>
