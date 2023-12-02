@@ -8,6 +8,7 @@ import Button from "@/components/Button";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import Spinner from "@/components/Spinner";
+import { useSession } from "next-auth/react";
 
 
 const Title = styled.h2`
@@ -55,6 +56,7 @@ const ReviewHeader = styled.div`
 `;
 
 export default function ProductReviews({product}) {
+    const {data:session} = useSession();
   const [title,setTitle] = useState('');
   const [description,setDescription] = useState('');
   const [stars,setStars] = useState(0);
