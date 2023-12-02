@@ -11,6 +11,8 @@ import CartIcon from "@/components/icons/CartIcon";
 import {useContext} from "react";
 import {CartContext} from "@/components/CartContext";
 import FlyingButton from "@/components/FlyingButton";
+import ProductReviews from "@/components/ProductReviews";
+
 
 const ColWrapper = styled.div`
   display: grid;
@@ -56,6 +58,7 @@ export default function ProductPage({product}) {
             </PriceRow>
           </div>
         </ColWrapper>
+        <ProductReviews product={product} />
       </Center>
     </>
   );
