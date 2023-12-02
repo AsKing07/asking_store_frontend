@@ -81,7 +81,7 @@ export default function ProductReviews({product}) {
   }
   return (
     <div>
-      <Title>Commandes</Title>
+      <Title>Commentaires</Title>
       <ColsWrapper>
         <div>
           <WhiteBox>
