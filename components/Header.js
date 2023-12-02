@@ -5,6 +5,8 @@ import {useContext, useState} from "react";
 import {CartContext} from "@/components/CartContext";
 import BarsIcon from "@/components/icons/Bars";
 import SearchIcon from "./icons/SearchIcon";
+import Button from "./Button";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const StyledHeader = styled.header`
   background-color: #222;
@@ -83,9 +85,27 @@ const SideIcons = styled.div`
   }
 `;
 
+const LoginButton = styled(Button)`
+min-width:30px;
+display: block;
+@media screen and (max-width: 768px) {
+  display: none;
+}
+`;
+
 
 export default function Header()
 {
+
+  async function login() {
+    await signIn("google");
+  }
+  async function logout() {
+    await signOut({
+      callbackUrl: process.env.NEXT_PUBLIC_PUBLIC_URL,
+    });
+  }
+  const {data:session}= useSession();
     const {cartProducts} = useContext(CartContext);
     const [mobileNavActive,setMobileNavActive] = useState(false);
     return(
@@ -100,6 +120,17 @@ export default function Header()
                         <NavLink href={'/categories'}>Catégories</NavLink>
                         <NavLink href={'/account'}>Compte</NavLink>
                         <NavLink href={'/cart'}>Panier({cartProducts.length})</NavLink>
+                          {
+                            !session &&(
+                              <LoginButton primary onClick={login}>Se Connecter</LoginButton>
+                            )
+                          }
+                          {
+                            session &&(
+                              <LoginButton primary onClick={logout}>Se Deconnecter</LoginButton>
+                            )
+                          }
+                       
                     </StyledNav>
                     <SideIcons>
             <Link href={'/search'}><SearchIcon /></Link>

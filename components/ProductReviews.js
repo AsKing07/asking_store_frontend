@@ -8,7 +8,7 @@ import Button from "@/components/Button";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import Spinner from "@/components/Spinner";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 
 const Title = styled.h2`
@@ -55,6 +55,25 @@ const ReviewHeader = styled.div`
   }
 `;
 
+
+const UserName = styled.p`
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+`;
+
+const UserImage = styled.img`
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+`;
+
+const UserInfoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
 export default function ProductReviews({product}) {
     const {data:session} = useSession();
   const [title,setTitle] = useState('');
@@ -73,36 +92,54 @@ export default function ProductReviews({product}) {
   }
   useEffect(() => {
     loadReviews();
+
   }, []);
-  function loadReviews() {
+  async function loadReviews() {
     setReviewsLoading(true);
-    axios.get('/api/reviews?product='+product._id).then(res => {
+   await  axios.get('/api/reviews?product='+product._id).then(res => {
       setReviews(res.data);
       setReviewsLoading(false);
     });
+  }
+  async function login() {
+    await signIn("google");
   }
   return (
     <div>
       <Title>Commentaires</Title>
       <ColsWrapper>
         <div>
-          <WhiteBox>
-            <Subtitle>Ajouter un commentaire</Subtitle>
-            <div>
-              <StarsRating onChange={setStars} />
+            {
+                !session &&(
+                    <WhiteBox>
+                          <div>
+              <Button primary onClick={login}>Connectez-vous pour laisser un commentaire</Button>
             </div>
-            <Input
-              value={title}
-              onChange={ev => setTitle(ev.target.value)}
-              placeholder="Titre" />
-            <Textarea
-              value={description}
-              onChange={ev => setDescription(ev.target.value)}
-              placeholder="Qu'avez-vous pensé de ce produit? Le recommandez-vous?" />
-            <div>
-              <Button primary onClick={submitReview}>Soumettre votre commentaire</Button>
-            </div>
-          </WhiteBox>
+                    </WhiteBox>
+                )
+            }
+            {
+                session &&(
+                    <WhiteBox>
+                    <Subtitle>Ajouter un commentaire</Subtitle>
+                    <div>
+                      <StarsRating onChange={setStars} />
+                    </div>
+                    <Input
+                      value={title}
+                      onChange={ev => setTitle(ev.target.value)}
+                      placeholder="Titre" />
+                    <Textarea
+                      value={description}
+                      onChange={ev => setDescription(ev.target.value)}
+                      placeholder="Qu'avez-vous pensé de ce produit? Le recommandez-vous?" />
+                    <div>
+                      <Button primary onClick={submitReview}>Soumettre votre commentaire</Button>
+                    </div>
+                  </WhiteBox>
+                )
+            }
+        
         </div>
         <div>
           <WhiteBox>
@@ -113,7 +150,9 @@ export default function ProductReviews({product}) {
             {reviews.length === 0 && (
               <p>Pas de commentaire :(</p>
             )}
+            {console.log(reviews)}
             {reviews.length > 0 && reviews.map(review => (
+               
               <ReviewWrapper>
                 <ReviewHeader>
                   <StarsRating size={'sm'} disabled={true} defaultHowMany={review.stars} />
@@ -121,6 +160,14 @@ export default function ProductReviews({product}) {
                 </ReviewHeader>
                 <h3>{review.title}</h3>
                 <p>{review.description}</p>
+                 {/* Affichage du nom et de la photo de l'utilisateur */}
+                 {review?.user && (
+  <UserInfoWrapper>
+    <UserImage src={review?.user?.image} alt="User" />
+    <UserName>{review?.user?.name}</UserName>
+                      
+  </UserInfoWrapper>
+)}
               </ReviewWrapper>
             ))}
           </WhiteBox>
