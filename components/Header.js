@@ -88,9 +88,7 @@ const SideIcons = styled.div`
 const LoginButton = styled(Button)`
 min-width:30px;
 display: block;
-@media screen and (max-width: 768px) {
-  display: none;
-}
+
 `;
 
 
