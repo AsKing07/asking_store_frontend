@@ -9,6 +9,7 @@ import axios from "axios";
 import ProductsGrid from "@/components/ProductsGrid";
 import { debounce } from "lodash";
 import Spinner from "@/components/Spinner";
+import Footer from "@/components/Footer";
 
 // Styles pour le champ de recherche
 const SearchInput = styled(Input)`
@@ -91,6 +92,8 @@ export default function SearchPage() {
            
         )}
       </Center>
+
+      <Footer />
     </>
   );
 }

@@ -8,6 +8,7 @@ import Title from "@/components/Title";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 import { WishedProduct } from "@/models/WishedProduct";
+import Footer from "@/components/Footer";
 
 export default function ProductsPage({products,wishedProducts}) {
   return (
@@ -17,6 +18,7 @@ export default function ProductsPage({products,wishedProducts}) {
         <Title>Tous les produits</Title>
         <ProductsGrid products={products}  wishedProducts={wishedProducts}/>
       </Center>
+      <Footer />
     </>
   );
 }
