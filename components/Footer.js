@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import GitHubIcon from "./icons/Github";
 import FacebookIcon from "./icons/FacebookIcon";
+import Link from "next/link";
 
 const FooterContainer = styled.footer`
   background-color: black; /* Arrière-plan noir */
@@ -78,13 +79,13 @@ export default function Footer() {
         </SocialMediaIcons>
         <FooterLinks>
           <FooterLink>
-            <a href="/about">À propos de nous</a>
+            <Link href="/about">À propos de nous</Link>
           </FooterLink>
           <FooterLink>
-            <a href="/terms">Termes et conditions</a>
+            <Link href="/terms">Termes et conditions</Link>
           </FooterLink>
           <FooterLink>
-            <a href="/contactus">Contactez-nous</a>
+            <Link href="/contactus">Contactez-nous</Link>
           </FooterLink>
           {/* Ajoutez d'autres liens si nécessaire */}
         </FooterLinks>
