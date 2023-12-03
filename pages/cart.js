@@ -17,6 +17,7 @@ import {RevealWrapper} from "next-reveal";
 import Modal from 'react-modal';
 import { useSession } from "next-auth/react";
 import Spinner from "@/components/Spinner";
+import Footer from "@/components/Footer";
 Modal.setAppElement('#__next');
 
 
@@ -274,6 +275,7 @@ export default function CartPage() {
             </Box>
           </ColumnsWrapper>
         </Center>
+        <Footer />
       </>
     );
   }
@@ -408,6 +410,7 @@ export default function CartPage() {
         </ColumnsWrapper>
        
       </Center>
+      <Footer />
       <Modal
   isOpen={modalIsOpen}
   onRequestClose={() => setModalIsOpen(false)}

@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-key */
 import Button from "@/components/Button";
 import Center from "@/components/Center";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Input from "@/components/Input";
 import ProductBox from "@/components/ProductBox";
@@ -276,6 +277,7 @@ export default function AccountPage() {
         </ColsWrapper>
        
       </Center>
+      <Footer />
     </>
   );
 }

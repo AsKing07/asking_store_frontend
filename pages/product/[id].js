@@ -12,6 +12,7 @@ import { useContext } from "react";
 import { CartContext } from "@/components/CartContext";
 import FlyingButton from "@/components/FlyingButton";
 import ProductReviews from "@/components/ProductReviews";
+import Footer from "@/components/Footer";
 
 const ColWrapper = styled.div`
   display: grid;
@@ -82,6 +83,7 @@ export default function ProductPage({ product }) {
         </ColWrapper>
         <ProductReviews product={product} />
       </Center>
+      <Footer />
     </>
   );
 }
