@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/jsx-key */
 import styled from "styled-components";
 import Input from "@/components/Input";
@@ -9,6 +10,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import Spinner from "@/components/Spinner";
 import { signIn, useSession } from "next-auth/react";
+import Link from "next/link";
 
 
 const Title = styled.h2`
@@ -114,6 +116,8 @@ export default function ProductReviews({product}) {
                     <WhiteBox>
                           <div>
               <Button primary onClick={login}>Connectez-vous pour laisser un commentaire</Button>
+              <p>En vous connectant, vous acceptez les <Link href={'/terms'}>Termes et conditions d'utilisation</Link></p>
+
             </div>
                     </WhiteBox>
                 )

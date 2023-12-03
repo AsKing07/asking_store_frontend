@@ -13,6 +13,7 @@ import WhiteBox from "@/components/WhiteBox";
 import axios from "axios";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { RevealWrapper } from "next-reveal";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import PhoneInput from "react-phone-number-input";
 import 'react-phone-number-input/style.css'
@@ -260,9 +261,14 @@ export default function AccountPage() {
                   </Button>
                 )}
                 {!session && (
-                  <Button primary onClick={login}>
+                  <>
+                      <Button primary onClick={login}>
                     Connexion avec Google
                   </Button>
+                  <p>En vous connectant, vous acceptez les <Link href={'/terms'}>Termes et conditions d'utilisation</Link></p>
+                  </>
+                
+                  
                 )}
               </WhiteBox>
             </RevealWrapper>
