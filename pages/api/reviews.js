@@ -8,21 +8,23 @@ export default async function handle(req, res) {
   await mongooseConnect();
 try{
     const { user } = await getServerSession(req, res, authOptions);
+    if (req.method === 'POST' && user) {
+      const { title, description, stars, product } = req.body;
+      // const userId = user?.id; // Récupération de l'ID de l'utilisateur connecté
+      res.json(await Review.create({ title, description, stars, product, user }));
+    }
+  
+    
 }catch(e)
 {
 
 }
 
+if (req.method === 'GET') {
+  const { product } = req.query;
+  const reviews = await Review.find({ product }, null, { sort: { createdAt: -1 } });
+  res.json(reviews);
+}
 
-  if (req.method === 'POST' && user) {
-    const { title, description, stars, product } = req.body;
-    // const userId = user?.id; // Récupération de l'ID de l'utilisateur connecté
-    res.json(await Review.create({ title, description, stars, product, user }));
-  }
-
-  if (req.method === 'GET') {
-    const { product } = req.query;
-    const reviews = await Review.find({ product }, null, { sort: { createdAt: -1 } });
-    res.json(reviews);
-  }
+  
 }
