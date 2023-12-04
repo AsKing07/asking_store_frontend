@@ -86,6 +86,7 @@ export default function ProductReviews({product}) {
   function submitReview() {
     const data = {title,description,stars,product:product._id};
     axios.post('/api/reviews', data).then(res => {
+      console.log(res)
       setTitle('');
       setDescription('');
       setStars(0);
