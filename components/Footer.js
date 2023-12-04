@@ -78,9 +78,9 @@ export default function Footer() {
           {/* Ajoutez d'autres icônes et liens vers d'autres réseaux sociaux si nécessaire */}
         </SocialMediaIcons>
         <FooterLinks>
-          <FooterLink>
+          {/* <FooterLink>
             <Link href="/about">À propos de nous</Link>
-          </FooterLink>
+          </FooterLink> */}
           <FooterLink>
             <Link href="/terms">Termes et conditions</Link>
           </FooterLink>

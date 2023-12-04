@@ -34,6 +34,47 @@ async function successHandler(response) {
     status: 'success',
     orderId: orderId,
   });
+  console.log(response)
+
+  // let nodemailer = require('nodemailer');
+  //       const transporter = nodemailer.createTransport({ 
+  //         service: 'Gmail',
+  //         auth : { 
+  //             user : 'charbelsnn@gmail.com', 
+  //             pass : process.env.GOOGLE_APP_PASSWORD, 
+  //         }, 
+  //         secure : true, 
+  //     });
+  //     transporter.verify((error) => {
+  //         if (error) {
+  //             console.log(error);
+  //         } else {
+  //             console.log("Ready to Send");
+  //         }
+  //     });
+
+  //     const Mail = {
+  //       from: "AsKing Store- Do Not reply", // Modifier l'expéditeur
+  //       to: response.data.email, // Utiliser l'adresse e-mail de l'utilisateur
+  //       subject: "Merci pour votre commande - AsKing Store",
+  //       html: `<p>Bonjour ${response.data.name},</p>
+  //              <p>Nous vous remercions d'avoir choisi AsKing Store.</p>
+  //              <p>Nous avons bien reçu votre commande!</p>
+  //              <p>Nous la traiterons et vous serez livré dans les plus brefs délais</p>
+  //              <p>Adrese de livraison: ${response.data.country}, ${response.data.city}, ${response.data.streetAddress} </p>
+  //              <p>Nous vous recontacterons sous peu.</p>
+  //              <p>Cordialement,<br/>L'équipe AsKing Store</p>
+  //              <p>Cet email a été envoyé automatiquement, veuillez ne pas y répondre!</p>`,
+  //   };
+
+  //   transporter.sendMail(Mail, (err) => {
+  //     if (err) {
+  //         res.json(err);
+  //     } else {
+  //         res.json({ code: 200, status: "Message Sent" });
+  //     }
+  // });
+      
 
   window.location = success_url;
 }

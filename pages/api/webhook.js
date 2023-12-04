@@ -24,10 +24,49 @@ export default async function handler(req,res) {
       const data = event.data.object;
       const orderId = data.metadata.orderId;
       const paid = data.payment_status === 'paid';
+      console.log(data)
       if (orderId && paid) {
         await Order.findByIdAndUpdate(orderId,{
           paid:true,
         })
+        let nodemailer = require('nodemailer');
+        const transporter = nodemailer.createTransport({ 
+          service: 'Gmail',
+          auth : { 
+              user : 'charbelsnn@gmail.com', 
+              pass : process.env.GOOGLE_APP_PASSWORD, 
+          }, 
+          secure : true, 
+      });
+      transporter.verify((error) => {
+          if (error) {
+              console.log(error);
+          } else {
+              console.log("Ready to Send");
+          }
+      });
+
+      const Mail = {
+        from: "AsKing Store- Do Not reply", // Modifier l'expéditeur
+        to: data.customer_email, // Utiliser l'adresse e-mail de l'utilisateur
+        subject: "Merci pour votre commande - AsKing Store",
+        html: `<p>Bonjour ${data.customer_details.name},</p>
+               <p>Nous vous remercions d'avoir choisi AsKing Store.</p>
+               <p>Nous avons bien reçu votre commande!</p>
+               <p>Nous la traiterons et vous serez livré dans les plus brefs délais :</p>
+               <p>Nous vous recontacterons sous peu.</p>
+               <p>Cordialement,<br/>L'équipe AsKing Store</p>
+               <p>Cet email a été envoyé automatiquement, veuillez ne pas y répondre!</p>`,
+    };
+
+    transporter.sendMail(Mail, (err) => {
+      if (err) {
+          res.json(err);
+      } else {
+          res.json({ code: 200, status: "Message Sent" });
+      }
+  });
+      
       }
       break;
     default:
