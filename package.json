@@ -19,6 +19,7 @@
     "next": "14.0.3",
     "next-auth": "^4.24.5",
     "next-reveal": "^1.0.6",
+    "nodemailer": "^6.9.7",
     "react": "^18",
     "react-dom": "^18",
     "react-flying-item": "^1.1.2",
