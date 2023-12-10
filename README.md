@@ -1,7 +1,7 @@
 
 # Asking Store
 
-An ecommerce web project carried out with NextJs, MongoDB, with Stripe and KKipay as payment methods
+An ecommerce web project carried out with NextJs, MongoDB, with Stripe and KKipay as payment methods in test mode
 
 
 ## Screenshots
